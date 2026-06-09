@@ -20,6 +20,15 @@ npm run dev      # http://localhost:3000
 | Styling | `components/ScrollDive.module.css` | Full-bleed cinematic look, scoped via CSS module. |
 | Content | `lib/sequence.ts` | The only file you edit for images + captions. |
 | Images | `public/frames/` | Served through `next/image` (AVIF/WebP, responsive sizes). |
+| The walkthrough | `components/Experience.tsx` | **One** pinned, scroll-scrubbed section. The waving-volume elevation **draws itself in** (assembly), every floor **ignites** (ignition), then the same elevation becomes the navigator for a **floor-by-floor** dive — each level lights up while a panel shows its schematic plan + icon chips of what's inside — and it lands on the **statement**. Scroll snaps floor-to-floor. |
+| Floor plans / glyphs | `components/Icon.tsx` | Line-glyph icon set for the per-floor "what's here" chips. |
+| Show reel | `components/ShowReel.tsx` | Full-bleed video finale (`public/video/showreel.mp4`), cover-fit so it fills any screen incl. mobile portrait, taglines over a scrim, with play + sound toggles. |
+| Floor data | `lib/building.ts` | The floor program (`2B + G + 5 + Rooftop`), per-floor plan + features, zone colours, headline facts and taglines. |
+| Elevation geometry | `lib/elevation.ts` | Shared waving-volume geometry (paths, layout) — one source of truth for the elevation. |
+
+The page opens **straight into the pinned cinematic sequence** (no intro fold),
+then flows into the unified building walkthrough — `<ScrollDive />` followed by
+`<Experience />` in `app/page.tsx`.
 
 ## Customize
 

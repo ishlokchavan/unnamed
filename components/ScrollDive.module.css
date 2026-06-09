@@ -242,7 +242,8 @@
 
 @media (max-width: 820px) {
   .img {
-    object-fit: contain; /* preserve the full cinemascope frame on phones */
+    object-fit: cover; /* zoom to fill the phone screen, no letterboxing */
+    object-position: center;
   }
   .caption {
     max-width: 64vw;
