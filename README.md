@@ -20,14 +20,14 @@ npm run dev      # http://localhost:3000
 | Styling | `components/ScrollDive.module.css` | Full-bleed cinematic look, scoped via CSS module. |
 | Content | `lib/sequence.ts` | The only file you edit for images + captions. |
 | Images | `public/frames/` | Served through `next/image` (AVIF/WebP, responsive sizes). |
-| The structure | `components/Building.tsx` | A conceptual 2D **design board** — title block, an interactive SVG waving-volume elevation (click any level), facade callouts, floor schedule, detail panel, plan + massing insets, scale bar & north arrow. |
-| The reveal | `components/Reveal.tsx` | A pinned, scroll-scrubbed GSAP sequence where the tower **draws itself in**, every floor **ignites** with its programme, the **numbers** count up with programme bars, and the **taglines** land. |
-| Floor data | `lib/building.ts` | The floor program (`2B + G + 5 + Rooftop`), zone colours and headline facts. |
-| Elevation geometry | `lib/elevation.ts` | Shared waving-volume geometry (paths, layout) used by both the board and the reveal — one source of truth. |
+| The walkthrough | `components/Experience.tsx` | **One** pinned, scroll-scrubbed section. The waving-volume elevation **draws itself in** (assembly), every floor **ignites** (ignition), then the same elevation becomes the navigator for a **floor-by-floor** dive — each level lights up while a panel shows its schematic plan + icon chips of what's inside — and it lands on the **statement**. Scroll snaps floor-to-floor. |
+| Floor plans / glyphs | `components/Icon.tsx` | Line-glyph icon set for the per-floor "what's here" chips. |
+| Floor data | `lib/building.ts` | The floor program (`2B + G + 5 + Rooftop`), per-floor plan + features, zone colours, headline facts and taglines. |
+| Elevation geometry | `lib/elevation.ts` | Shared waving-volume geometry (paths, layout) — one source of truth for the elevation. |
 
-The page opens **straight into the pinned sequence** (no intro fold), then resolves
-into the building breakdown — `<ScrollDive />` followed by `<Building />` in
-`app/page.tsx`.
+The page opens **straight into the pinned cinematic sequence** (no intro fold),
+then flows into the unified building walkthrough — `<ScrollDive />` followed by
+`<Experience />` in `app/page.tsx`.
 
 ## Customize
 

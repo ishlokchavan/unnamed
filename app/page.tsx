@@ -1,22 +1,15 @@
 import ScrollDive from "@/components/ScrollDive";
-import Building from "@/components/Building";
-import Reveal from "@/components/Reveal";
-import FloorDive from "@/components/FloorDive";
+import Experience from "@/components/Experience";
 
 export default function Home() {
   return (
     <main>
-      {/* —— open straight into the pinned sequence, no intro fold —— */}
+      {/* —— open straight into the pinned cinematic sequence —— */}
       <ScrollDive />
 
-      {/* —— the 2D design board: floor-by-floor breakdown —— */}
-      <Building />
-
-      {/* —— the building assembles & ignites —— */}
-      <Reveal />
-
-      {/* —— go inside: a visual walkthrough of every floor —— */}
-      <FloorDive />
+      {/* —— one unified walkthrough: the building assembles, ignites,
+             opens floor by floor, and lands the statement —— */}
+      <Experience />
     </main>
   );
 }
