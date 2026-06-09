@@ -9,6 +9,17 @@
 
 export type Zone = "rooftop" | "nightlife" | "community" | "office" | "retail" | "fnb" | "basement";
 
+// hex map for canvas/SVG/JS contexts (CSS uses the matching classes)
+export const ZONE_COLORS: Record<Zone, string> = {
+  rooftop: "#e8a24a",
+  nightlife: "#b46cff",
+  community: "#5ec8c2",
+  office: "#7f9cf5",
+  retail: "#e87aa6",
+  fnb: "#6fcf7f",
+  basement: "#9a948a",
+};
+
 export type Floor = {
   id: string;        // short code shown on the elevation: "R", "L5"… "B2"
   level: string;     // long label

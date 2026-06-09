@@ -21,7 +21,9 @@ npm run dev      # http://localhost:3000
 | Content | `lib/sequence.ts` | The only file you edit for images + captions. |
 | Images | `public/frames/` | Served through `next/image` (AVIF/WebP, responsive sizes). |
 | The structure | `components/Building.tsx` | A conceptual 2D **design board** — title block, an interactive SVG waving-volume elevation (click any level), facade callouts, floor schedule, detail panel, plan + massing insets, scale bar & north arrow. |
-| Floor data | `lib/building.ts` | The only file you edit for the floor program (`2B + G + 5 + Rooftop`) and headline facts. |
+| The reveal | `components/Reveal.tsx` | A pinned, scroll-scrubbed GSAP sequence where the tower **draws itself in**, every floor **ignites** with its programme, the **numbers** count up with programme bars, and the **taglines** land. |
+| Floor data | `lib/building.ts` | The floor program (`2B + G + 5 + Rooftop`), zone colours and headline facts. |
+| Elevation geometry | `lib/elevation.ts` | Shared waving-volume geometry (paths, layout) used by both the board and the reveal — one source of truth. |
 
 The page opens **straight into the pinned sequence** (no intro fold), then resolves
 into the building breakdown — `<ScrollDive />` followed by `<Building />` in

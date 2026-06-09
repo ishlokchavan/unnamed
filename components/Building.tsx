@@ -1,58 +1,12 @@
 "use client";
 
 import { useState } from "react";
-import { FLOORS, BUILDING_META, type Floor } from "@/lib/building";
+import { FLOORS, BUILDING_META } from "@/lib/building";
+import {
+  L, R, W, MID, ROOF_CREST, ROOF_UNDER, FH, GRADE, PLAZA, BH, BOTTOM,
+  SLAB_AMP, ABOVE, BELOW, dirOf, waveLine, TOWER, ROOF, MULLIONS, LAYOUT,
+} from "@/lib/elevation";
 import styles from "./Building.module.css";
-
-/* ============================================================
-   Geometry for the waving-volume elevation (SVG drafting space).
-   Drawn top → bottom like a real elevation: roof, 7 above-grade
-   floors (R,L5,L4,L3,L2,L1,G), grade line, then 2 basements.
-   ============================================================ */
-const L = 250;          // tower left edge
-const R = 770;          // tower right edge
-const W = R - L;        // tower width
-const MID = (L + R) / 2;
-
-const ROOF_CREST = 152; // top of the waving roof
-const ROOF_UNDER = 198; // underside of the roof (top of glazing)
-const FH = 142;         // above-grade floor height
-const GRADE = ROOF_UNDER + 7 * FH; // = 1192, the plaza / ground line
-const PLAZA = GRADE + 22;
-const BH = 108;         // basement floor height
-const BOTTOM = PLAZA + 2 * BH;
-
-const SLAB_AMP = 22;    // wave amplitude of each floor slab
-const ROOF_AMP = 46;    // bigger wave for the roof crest
-
-const ABOVE = FLOORS.slice(0, 7); // R … G
-const BELOW = FLOORS.slice(7);    // B1, B2
-
-const n = (v: number) => Math.round(v * 10) / 10;
-const dirOf = (i: number) => (i % 2 ? -1 : 1);
-
-// a smooth S-wave across the tower at height y
-const seg = (y: number, amp: number, d: number) =>
-  `C ${n(L + W * 0.28)} ${n(y - amp * d)} ${n(MID - W * 0.12)} ${n(y - amp * d)} ${n(MID)} ${n(y)} ` +
-  `C ${n(MID + W * 0.12)} ${n(y + amp * d)} ${n(R - W * 0.28)} ${n(y + amp * d)} ${n(R)} ${n(y)}`;
-const segRev = (y: number, amp: number, d: number) =>
-  `C ${n(R - W * 0.28)} ${n(y + amp * d)} ${n(MID + W * 0.12)} ${n(y + amp * d)} ${n(MID)} ${n(y)} ` +
-  `C ${n(MID - W * 0.12)} ${n(y - amp * d)} ${n(L + W * 0.28)} ${n(y - amp * d)} ${n(L)} ${n(y)}`;
-const waveLine = (y: number, amp: number, d: number) => `M ${L} ${n(y)} ${seg(y, amp, d)}`;
-
-// per-floor drawing layout
-type Lay = { f: Floor; yTop: number; h: number; yMid: number; above: boolean; bi: number };
-const LAYOUT: Lay[] = [
-  ...ABOVE.map((f, k) => ({ f, yTop: ROOF_UNDER + k * FH, h: FH, yMid: ROOF_UNDER + k * FH + FH / 2, above: true, bi: k })),
-  ...BELOW.map((f, j) => ({ f, yTop: PLAZA + j * BH, h: BH, yMid: PLAZA + j * BH + BH / 2, above: false, bi: 7 + j })),
-];
-
-// tower glazing outline (top = roof underside wave, bottom = grade wave)
-const TOWER = `M ${L} ${ROOF_UNDER} ${seg(ROOF_UNDER, SLAB_AMP, dirOf(0))} L ${R} ${GRADE} ${segRev(GRADE, SLAB_AMP, dirOf(7))} Z`;
-// the waving roof plate band
-const ROOF = `M ${L} ${ROOF_CREST} ${seg(ROOF_CREST, ROOF_AMP, 1)} L ${R} ${ROOF_UNDER} ${segRev(ROOF_UNDER, SLAB_AMP, dirOf(0))} Z`;
-
-const MULLIONS = Array.from({ length: Math.floor(W / 22) - 1 }, (_, i) => L + 18 + i * 22);
 
 // facade-feature callouts (static annotation, like the reference board)
 const CALLOUTS = [
