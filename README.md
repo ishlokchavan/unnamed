@@ -20,6 +20,12 @@ npm run dev      # http://localhost:3000
 | Styling | `components/ScrollDive.module.css` | Full-bleed cinematic look, scoped via CSS module. |
 | Content | `lib/sequence.ts` | The only file you edit for images + captions. |
 | Images | `public/frames/` | Served through `next/image` (AVIF/WebP, responsive sizes). |
+| The structure | `components/Building.tsx` | A 2D elevation / floor-by-floor breakdown of the building (the section after the frames). Each band is a clickable floor. |
+| Floor data | `lib/building.ts` | The only file you edit for the floor program (`2B + G + 5 + Rooftop`) and headline facts. |
+
+The page opens **straight into the pinned sequence** (no intro fold), then resolves
+into the building breakdown — `<ScrollDive />` followed by `<Building />` in
+`app/page.tsx`.
 
 ## Customize
 
