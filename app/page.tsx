@@ -1,5 +1,6 @@
 import ScrollDive from "@/components/ScrollDive";
 import Experience from "@/components/Experience";
+import ShowReel from "@/components/ShowReel";
 
 export default function Home() {
   return (
@@ -8,8 +9,11 @@ export default function Home() {
       <ScrollDive />
 
       {/* —— one unified walkthrough: the building assembles, ignites,
-             opens floor by floor, and lands the statement —— */}
+             and opens floor by floor —— */}
       <Experience />
+
+      {/* —— full-bleed show-reel finale —— */}
+      <ShowReel />
     </main>
   );
 }

@@ -4,7 +4,7 @@ import { useRef, useState } from "react";
 import { gsap } from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useGSAP } from "@gsap/react";
-import { FLOORS, BUILDING_META, TAGLINES, ZONE_COLORS, type Floor } from "@/lib/building";
+import { FLOORS, BUILDING_META, ZONE_COLORS, type Floor } from "@/lib/building";
 import {
   L, R, W, MID, ROOF_CREST, ROOF_UNDER, FH, GRADE, PLAZA, BH, BOTTOM,
   SLAB_AMP, ABOVE, dirOf, waveLine, TOWER, ROOF, MULLIONS, SLAB_YS, LAYOUT,
@@ -16,8 +16,7 @@ gsap.registerPlugin(ScrollTrigger, useGSAP);
 
 const F = FLOORS.length;     // 9 floors
 const DIVE = 0.26;           // progress where the floor walkthrough begins
-const CODA = 0.94;           // progress where the closing statement begins
-const PER = (CODA - DIVE) / F;
+const PER = (1 - DIVE) / F;  // the dive runs to the end; the reel closes it out
 
 const CALLOUTS = [
   { t: "WAVING ROOF STRUCTURE", lx: 24, ly: 150, px: MID - 90, py: ROOF_CREST - 30 },
@@ -88,9 +87,9 @@ export default function Experience() {
   const slabs = useRef<(SVGPathElement | null)[]>([]);
   const glows = useRef<(SVGRectElement | null)[]>([]);
 
-  const phaseRef = useRef<"build" | "floor" | "coda">("build");
+  const phaseRef = useRef<"build" | "floor">("build");
   const idxRef = useRef(0);
-  const [phase, setPhase] = useState<"build" | "floor" | "coda">("build");
+  const [phase, setPhase] = useState<"build" | "floor">("build");
   const [idx, setIdx] = useState(0);
 
   useGSAP(
@@ -133,7 +132,6 @@ export default function Experience() {
           snap: {
             snapTo: (v) => {
               if (v < DIVE - PER * 0.5) return v;       // free scrub through assembly/ignition
-              if (v >= CODA) return 0.985;               // settle on the statement
               const i = Math.min(F - 1, Math.max(0, Math.floor((v - DIVE) / PER)));
               return DIVE + (i + 0.5) * PER;             // snap to each floor
             },
@@ -143,10 +141,9 @@ export default function Experience() {
           onUpdate: (self) => {
             const p = self.progress;
             if (progress.current) progress.current.style.width = p * 100 + "%";
-            let ph: "build" | "floor" | "coda" = "build";
+            let ph: "build" | "floor" = "build";
             let fi = idxRef.current;
-            if (p >= CODA) ph = "coda";
-            else if (p >= DIVE) { ph = "floor"; fi = Math.min(F - 1, Math.floor((p - DIVE) / PER)); }
+            if (p >= DIVE) { ph = "floor"; fi = Math.min(F - 1, Math.floor((p - DIVE) / PER)); }
             if (ph !== phaseRef.current) { phaseRef.current = ph; setPhase(ph); }
             if (fi !== idxRef.current) { idxRef.current = fi; setIdx(fi); }
           },
@@ -189,7 +186,7 @@ export default function Experience() {
         <header className={styles.titleblock}>
           <p className={styles.eyebrow}><span className={styles.dot} /> Conceptual Walkthrough · Project 2305</p>
           <p className={styles.count}>
-            {phase === "build" ? "Overview" : phase === "coda" ? "Statement" : `${String(idx + 1).padStart(2, "0")} / ${F}`}
+            {phase === "build" ? "Overview" : `${String(idx + 1).padStart(2, "0")} / ${F}`}
           </p>
         </header>
 
@@ -344,15 +341,6 @@ export default function Experience() {
                   </span>
                 ))}
               </div>
-            </div>
-          )}
-
-          {phase === "coda" && (
-            <div key="coda" className={`${styles.card} ${styles.coda}`}>
-              <p className={styles.eyebrow}><span className={styles.dot} /> The Statement</p>
-              {TAGLINES.map((t, i) => (
-                <div key={t} className={styles.tagline} style={{ animationDelay: `${i * 0.12}s` }}>{t}</div>
-              ))}
             </div>
           )}
         </div>
