@@ -1,0 +1,41 @@
+.intro,
+.outro {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 0 clamp(20px, 6vw, 96px);
+  max-width: 1100px;
+}
+.outro {
+  align-items: flex-start;
+}
+
+.eyebrow {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: #e8a24a;
+  margin: 0 0 20px;
+}
+.h1 {
+  font-size: clamp(40px, 7vw, 96px);
+  font-weight: 500;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
+  margin: 0 0 28px;
+}
+.h2 {
+  font-size: clamp(30px, 5vw, 64px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  margin: 0 0 18px;
+}
+.lead {
+  font-size: clamp(15px, 1.6vw, 19px);
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 56ch;
+  margin: 0;
+}

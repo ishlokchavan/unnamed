@@ -1,0 +1,25 @@
+:root {
+  --bg: #07070a;
+  --ink: #f3efe7;
+  --muted: #8a8276;
+}
+
+* {
+  box-sizing: border-box;
+}
+html,
+body {
+  margin: 0;
+  padding: 0;
+  background: var(--bg);
+  color: var(--ink);
+}
+body {
+  font-family: var(--font-display), system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+::selection {
+  background: #e8a24a;
+  color: #1a1206;
+}
