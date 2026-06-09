@@ -1,10 +1,9 @@
 // ============================================================
-//  THE BUILDING — a 2D floor-by-floor breakdown of the concept.
+//  THE BUILDING — a floor-by-floor breakdown of the concept.
 //  Derived from the concept transcript: an alt mixed-use cultural
 //  hub in Al Barsha, Dubai (behind Art of Living).
 //
 //  Stack: 2B + G + 5 + Rooftop  (9 levels, read top → bottom).
-//  Edit copy here; the <Building /> component adapts to the list.
 // ============================================================
 
 export type Zone = "rooftop" | "nightlife" | "community" | "office" | "retail" | "fnb" | "basement";
@@ -20,18 +19,35 @@ export const ZONE_COLORS: Record<Zone, string> = {
   basement: "#9a948a",
 };
 
+// icon glyphs available to the floor-plan feature chips
+export type IconName =
+  | "fork" | "cup" | "box" | "camera" | "bag" | "gem" | "hanger" | "ring"
+  | "monitor" | "people" | "table" | "scissors" | "music" | "cocktail"
+  | "masks" | "sun" | "bridge" | "star";
+
+// how a floor reads in plan: dense small units, a few large ones,
+// an open hall, mixed amenities, or a club floor
+export type PlanLayout = "grid" | "large" | "open" | "amenity" | "club";
+
+export type FloorPlan = {
+  layout: PlanLayout;
+  units?: number;        // cell count for grid / large layouts
+  voidCore?: boolean;    // draw a central atrium void
+  features: { icon: IconName; label: string }[];
+};
+
 export type Floor = {
-  id: string;        // short code shown on the elevation: "R", "L5"… "B2"
+  id: string;        // short code on the elevation: "R", "L5"… "B2"
   level: string;     // long label
-  name: string;      // working / lore name (the doc's open question — kept evocative)
+  name: string;      // working / lore name
   zone: Zone;        // drives the colour band
   summary: string;   // one-line function
   scope: string;     // size / scale note
-  details: string[]; // what actually lives here, from the transcript
+  details: string[]; // what lives here, from the transcript
+  plan: FloorPlan;   // visual "what's on this floor"
 };
 
-// Top of the building first, ground in the middle, basements last —
-// so the array reads like a real elevation drawing.
+// Top of the building first, ground in the middle, basements last.
 export const FLOORS: Floor[] = [
   {
     id: "R",
@@ -46,6 +62,15 @@ export const FLOORS: Floor[] = [
       "Bookable as a single venue: concerts and events at scale.",
       "Rooftop theatre — musical plays & alternative performance Dubai lacks.",
     ],
+    plan: {
+      layout: "open",
+      features: [
+        { icon: "masks", label: "Rooftop theatre" },
+        { icon: "cocktail", label: "Open-air bars" },
+        { icon: "music", label: "Convertible club" },
+        { icon: "sun", label: "Indoor–outdoor deck" },
+      ],
+    },
   },
   {
     id: "L5",
@@ -59,6 +84,14 @@ export const FLOORS: Floor[] = [
       "Immersive / performance theatre space.",
       "The all-season counterpart to the rooftop above.",
     ],
+    plan: {
+      layout: "club",
+      features: [
+        { icon: "music", label: "Indoor club floor" },
+        { icon: "cocktail", label: "Bars & lounges" },
+        { icon: "masks", label: "Immersive theatre" },
+      ],
+    },
   },
   {
     id: "L4",
@@ -73,6 +106,16 @@ export const FLOORS: Floor[] = [
       "In-house tailoring & garment-alteration atelier for the alt-fashion scene.",
       "Built for people to gather, not just transact.",
     ],
+    plan: {
+      layout: "amenity",
+      voidCore: true,
+      features: [
+        { icon: "table", label: "Boardrooms & meeting rooms" },
+        { icon: "cup", label: "Networking café" },
+        { icon: "people", label: "Event & workshop space" },
+        { icon: "scissors", label: "Tailoring atelier" },
+      ],
+    },
   },
   {
     id: "L3",
@@ -87,6 +130,16 @@ export const FLOORS: Floor[] = [
       "Shared co-working zones woven through the floor.",
       "An incubator for the next generation of regional alt labels.",
     ],
+    plan: {
+      layout: "grid",
+      units: 20,
+      voidCore: true,
+      features: [
+        { icon: "monitor", label: "Micro-offices · 200–400 sq ft" },
+        { icon: "people", label: "Co-working zones" },
+        { icon: "table", label: "Shared boardrooms" },
+      ],
+    },
   },
   {
     id: "L2",
@@ -101,6 +154,16 @@ export const FLOORS: Floor[] = [
       "No storage on the floor — stock lives off-site in Al Quoz / Barsha.",
       "Staff styled to each brand's world (elevated biker, etc.).",
     ],
+    plan: {
+      layout: "large",
+      units: 6,
+      voidCore: true,
+      features: [
+        { icon: "bag", label: "Premium anchor stores" },
+        { icon: "gem", label: "Fine jewellery" },
+        { icon: "star", label: "Flagship units · 2–4k sq ft" },
+      ],
+    },
   },
   {
     id: "L1",
@@ -115,6 +178,17 @@ export const FLOORS: Floor[] = [
       "Central kiosks plus perimeter-and-island shopping, Dubai-Mall style.",
       "The grassroots layer that paints the neutral canvas.",
     ],
+    plan: {
+      layout: "grid",
+      units: 22,
+      voidCore: true,
+      features: [
+        { icon: "hanger", label: "Alt-fashion units" },
+        { icon: "gem", label: "Body-safe jewellery" },
+        { icon: "ring", label: "Piercing studios" },
+        { icon: "box", label: "Central kiosks" },
+      ],
+    },
   },
   {
     id: "G",
@@ -129,6 +203,17 @@ export const FLOORS: Floor[] = [
       "Central kiosks, photo booths and memory-making amenities.",
       "Climate-controlled bridge links across to the car-park building.",
     ],
+    plan: {
+      layout: "open",
+      voidCore: true,
+      features: [
+        { icon: "fork", label: "Restaurants & character cafés" },
+        { icon: "cup", label: "Coffee & dessert bars" },
+        { icon: "box", label: "Kiosks" },
+        { icon: "camera", label: "Photo booths" },
+        { icon: "bridge", label: "Bridge to car park" },
+      ],
+    },
   },
   {
     id: "B1",
@@ -141,6 +226,13 @@ export const FLOORS: Floor[] = [
       "Multiple nightclubs and late-night spaces.",
       "The building's nocturnal engine, tucked below the retail world.",
     ],
+    plan: {
+      layout: "club",
+      features: [
+        { icon: "music", label: "Nightclubs" },
+        { icon: "cocktail", label: "Late-night bars" },
+      ],
+    },
   },
   {
     id: "B2",
@@ -153,6 +245,13 @@ export const FLOORS: Floor[] = [
       "Additional clubs and specialised alternative businesses.",
       "Whatever the licences and the community call for.",
     ],
+    plan: {
+      layout: "club",
+      features: [
+        { icon: "music", label: "Specialised venues" },
+        { icon: "cocktail", label: "Alternative businesses" },
+      ],
+    },
   },
 ];
 
@@ -165,3 +264,10 @@ export const BUILDING_META = {
   look: "Fluid dark-glass box, Zaha Hadid / Opus by Omniyat",
   feel: "Gothic-meets-futurism · candle-warm amber light",
 };
+
+// closing statements (concept doc)
+export const TAGLINES = [
+  "The Alternative Canvas of Dubai.",
+  "Where the Underground Meets the Sky.",
+  "Premium Dissent.",
+];

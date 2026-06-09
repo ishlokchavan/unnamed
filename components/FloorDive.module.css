@@ -1,0 +1,176 @@
+/* ============================================================
+   FloorDive — pinned, scroll-stepped walkthrough of every floor.
+   Left: the elevation with the active floor lit. Right: that
+   floor's schematic plan + visual "what's here" chips.
+   ============================================================ */
+.scene {
+  --ink: #f3efe7;
+  --muted: #8a8276;
+  --accent: #e8a24a;
+  --line: rgba(243, 239, 231, 0.12);
+  --ease: cubic-bezier(0.22, 0.61, 0.36, 1);
+  position: relative;
+}
+
+.pin {
+  height: 100vh;
+  width: 100%;
+  overflow: hidden;
+  display: grid;
+  grid-template-columns: 0.85fr 1.15fr;
+  align-items: center;
+  gap: clamp(16px, 3vw, 56px);
+  padding: 0 clamp(20px, 5vw, 88px);
+  background:
+    radial-gradient(80% 60% at 24% 36%, rgba(232, 162, 74, 0.06), transparent 60%),
+    #07070a;
+}
+
+.top { position: absolute; inset: 0 0 auto 0; height: 2px; z-index: 6; }
+.bar { height: 100%; width: 0%; background: var(--accent); box-shadow: 0 0 12px var(--accent); }
+
+.heading {
+  position: absolute;
+  top: clamp(20px, 4vh, 40px);
+  left: clamp(20px, 5vw, 88px);
+  right: clamp(20px, 5vw, 88px);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  z-index: 5;
+  pointer-events: none;
+}
+.eyebrow {
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--accent);
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0;
+}
+.dot { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); box-shadow: 0 0 14px var(--accent); }
+.count {
+  font-family: var(--font-mono), monospace;
+  font-size: 12px;
+  letter-spacing: 0.18em;
+  color: var(--muted);
+  margin: 0;
+}
+
+/* left — elevation */
+.left { display: grid; place-items: center; height: 100%; }
+.elev { height: 84vh; max-height: 84vh; width: 100%; }
+.elevTag { font-family: var(--font-mono), monospace; font-size: 14px; font-weight: 500; }
+
+/* right — floor card */
+.right { position: relative; height: 100%; display: grid; align-content: center; }
+.card { animation: cardIn 0.5s var(--ease) both; }
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(14px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.cardHead { display: flex; align-items: center; gap: 16px; margin-bottom: 14px; }
+.code {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  flex: none;
+  border-radius: 5px;
+  font-family: var(--font-mono), monospace;
+  font-size: 19px;
+  font-weight: 600;
+  color: #0a0b10;
+}
+.lvl {
+  margin: 0 0 4px;
+  font-family: var(--font-mono), monospace;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.name {
+  margin: 0;
+  font-size: clamp(26px, 3.4vw, 44px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+}
+.scope {
+  margin: 0 0 22px;
+  font-family: var(--font-mono), monospace;
+  font-size: 12.5px;
+  letter-spacing: 0.05em;
+  color: var(--accent);
+}
+
+.planSvg {
+  display: block;
+  width: 100%;
+  max-width: 520px;
+  height: auto;
+  border: 1px solid var(--line);
+  border-radius: 6px;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0.2));
+  margin-bottom: 22px;
+}
+.planTiny {
+  font-family: var(--font-mono), monospace;
+  font-size: 8px;
+  letter-spacing: 0.12em;
+  fill: var(--muted);
+}
+
+.features {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  max-width: 520px;
+}
+.chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 9px;
+  padding: 9px 14px 9px 11px;
+  border: 1px solid;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+}
+.chipText {
+  font-size: 13.5px;
+  color: var(--ink);
+  letter-spacing: -0.005em;
+}
+
+/* coda */
+.coda { display: flex; flex-direction: column; gap: 18px; }
+.coda .eyebrow { margin-bottom: 10px; }
+.tagline {
+  font-size: clamp(24px, 3.4vw, 46px);
+  font-weight: 500;
+  letter-spacing: -0.02em;
+  line-height: 1.08;
+  animation: cardIn 0.6s var(--ease) both;
+}
+.tagline:first-of-type { color: var(--accent); }
+
+/* responsive */
+@media (max-width: 920px) {
+  .pin {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto auto;
+    align-content: center;
+    gap: 14px;
+    padding-top: 64px;
+  }
+  .elev { height: 34vh; }
+  .planSvg, .features { max-width: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card, .tagline { animation: none; }
+}

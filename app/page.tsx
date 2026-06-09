@@ -1,6 +1,7 @@
 import ScrollDive from "@/components/ScrollDive";
 import Building from "@/components/Building";
 import Reveal from "@/components/Reveal";
+import FloorDive from "@/components/FloorDive";
 
 export default function Home() {
   return (
@@ -11,8 +12,11 @@ export default function Home() {
       {/* —— the 2D design board: floor-by-floor breakdown —— */}
       <Building />
 
-      {/* —— the building comes alive: scroll-scrubbed reveal —— */}
+      {/* —— the building assembles & ignites —— */}
       <Reveal />
+
+      {/* —— go inside: a visual walkthrough of every floor —— */}
+      <FloorDive />
     </main>
   );
 }
