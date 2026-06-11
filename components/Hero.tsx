@@ -33,7 +33,7 @@ export default function Hero() {
       <video
         ref={video}
         className={styles.video}
-        src="/video/showreel1.mp4"
+        src="/video/showreel.mp4"
         autoPlay
         muted
         loop
