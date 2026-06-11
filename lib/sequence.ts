@@ -10,8 +10,8 @@ export type Frame = {
 
 export const SEQUENCE: Frame[] = [
   { src: "/frames/frame-1.jpg", title: "The Spire",    sub: "I · rain over the black tower" },
-  { src: "/frames/frame-2.jpg", title: "The Vigil",    sub: "II · candlelight in the old nave" },
-  { src: "/frames/frame-3.jpg", title: "The Crossing", sub: "III · into the long light" },
-  { src: "/frames/frame-4.jpg", title: "The Bazaar",   sub: "IV · the lower market, after dark" },
-  { src: "/frames/frame-5.jpg", title: "The Edge",     sub: "V · above the city, first night" },
+  { src: "/frames/frame-2.png", title: "The Vigil",    sub: "II · candlelight in the old nave" },
+  { src: "/frames/frame-3.png", title: "The Crossing", sub: "III · into the long light" },
+  { src: "/frames/frame-4.png", title: "The Bazaar",   sub: "IV · the lower market, after dark" },
+  { src: "/frames/frame-5.png", title: "The Edge",     sub: "V · above the city, first night" },
 ];
